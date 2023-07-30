@@ -1,6 +1,6 @@
 [
   {
     "name": "nodejs-application",
-    "imageUri": "646360616404.dkr.ecr.us-east-1.amazonaws.com/arieldomchik"
+    "imageUri": "646360616404.dkr.ecr.us-east-1.amazonaws.com/arieldomchik:latest"
   }
 ]
