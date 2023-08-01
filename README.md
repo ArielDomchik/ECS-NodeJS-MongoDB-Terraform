@@ -49,9 +49,10 @@ Follow the steps below to deploy the Octopus application on AWS ECS Fargate:
 `git clone https://github.com/ArielDomchik/ECS-NodeJS-MongoDB-Terraform` 
 
 2.  Set up the AWS credentials:
-
-`export AWS_ACCESS_KEY_ID=your_access_key`
-`export AWS_SECRET_ACCESS_KEY=your_secret_key`
+```
+export AWS_ACCESS_KEY_ID=your_access_key
+export AWS_SECRET_ACCESS_KEY=your_secret_key
+```
 - Make sure to change the region in `variables.tf` : 
 ```variable "region" {
   description = "AWS region"
@@ -63,14 +64,15 @@ Follow the steps below to deploy the Octopus application on AWS ECS Fargate:
 
 3.  Deploy the infrastructure using Terraform:
 
-`terraform init`
+```
+terraform init
 
-`terraform apply -target=module.vpc`
+terraform apply -target=module.vpc --auto-approve
 
-`terraform apply -target=aws_efs_file_system.mongodb_efs -target=aws_efs_mount_target.mongodb_mount_target -target= aws_efs_mount_target.mongodb_mount_target2` 
+terraform apply -target=aws_efs_file_system.mongodb_efs -target=aws_efs_mount_target.mongodb_mount_target -target= aws_efs_mount_target.mongodb_mount_target2 --auto-approve
 
-`terraform apply`
-
+terraform apply --auto-approve
+```
 ** Note : EFS Needs to be provisioned first to be used by the ECS Task.
 
 ## Pipeline Setup
@@ -83,7 +85,12 @@ After the infrastructure is provisioned, any changes pushed to your GitHub repos
 
 ## Terraform Configuration
 
-The infrastructure for the application is defined using Terraform. The Terraform configuration in the `main.tf` file provisions the VPC, ECS cluster, EFS file system, security groups, and ECS service with task definition.
+The infrastructure for the application is defined using Terraform. The Terraform configuration in the `main.tf` file provisions the VPC and networking components, ECS cluster, EFS file system, security groups, IAM Roles ,and ECS service with task definition. 
+
+## Destroying Resources
+
+To destroy the resources created by Terraform and remove all the infrastructure, -   Run the following command: `terraform destroy --auto-approve`
+Note: Destroying the resources will permanently delete all the infrastructure and data associated with the application. Proceed with caution.
 
 ----------
 
