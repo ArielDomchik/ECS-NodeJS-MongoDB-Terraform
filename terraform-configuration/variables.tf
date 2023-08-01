@@ -7,7 +7,13 @@ variable "region" {
 variable "container_image_url" {
   description = "URL of the container image"
   type        = string
-  default     = "753392824297.dkr.ecr.eu-central-1.amazonaws.com/arieldomchik:latest"
+  default     = "646360616404.dkr.ecr.us-east-1.amazonaws.com/arieldomchik:latest"
+}
+
+variable "db_image_url" {
+  description = "URL of DB image"
+  type        = string
+  default     = "bitnami/mongodb"
 }
 
 variable "vpc_name" {
@@ -25,47 +31,37 @@ variable "ecs_cluster_name" {
 variable "ecs_task_family" {
   description = "Name of the ECS task family"
   type        = string
-  default     = "app-first-task"
+  default     = "nodejs-mongodb-task"
 }
 
 variable "ecs_service_name" {
   description = "Name of the ECS service"
   type        = string
-  default     = "app-first-service"
+  default     = "nodejs-mongodb-service"
 }
 
 variable "lb_name" {
   description = "Name of the load balancer"
   type        = string
-  default     = "example-lb"
+  default     = "octopus-lb"
 }
 
 variable "target_group_name" {
   description = "Name of the target group"
   type        = string
-  default     = "example-target-group"
+  default     = "octopus-target-group"
 }
 
-variable "task_container_name" {
-  description = "Name of the ECS task container"
-  type        = string
-  default     = "app-first-container"
-}
 
 variable "security_group_name_lb" {
   description = "Name of the security group for the load balancer"
   type        = string
-  default     = "example-alb-security-group"
+  default     = "octopus-alb-security-group"
 }
 
 variable "security_group_name_task" {
   description = "Name of the security group for the ECS task"
   type        = string
-  default     = "example-task-security-group"
+  default     = "octopus-task-security-group"
 }
 
-variable "autoscaler_name" {
-  description = "Name of the autoscaler for service"
-  type        = string
-  default     = "ecs-service-scaling"
-}

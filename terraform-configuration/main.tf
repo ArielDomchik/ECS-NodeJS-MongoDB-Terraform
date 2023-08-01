@@ -1,4 +1,3 @@
-# Task 1
 provider "aws" {
   region = var.region
 }
@@ -22,7 +21,6 @@ module "vpc" {
   enable_dns_hostnames = true
 }
 
-# Task 2
 resource "aws_ecs_cluster" "my_cluster" {
   name = var.ecs_cluster_name
 }
@@ -82,7 +80,7 @@ resource "aws_security_group_rule" "ecs_loopback_rule" {
 }
 
 resource "aws_ecs_task_definition" "app_task" {
-  family                   = "nodejs-mongodb-task"
+  family                   = var.ecs_task_family
   requires_compatibilities = ["FARGATE"]  # Use Fargate launch type for serverless containers
   network_mode             = "awsvpc"
   cpu                      = 512
@@ -93,7 +91,7 @@ resource "aws_ecs_task_definition" "app_task" {
   container_definitions = jsonencode([
     {
       name      = "nodejs-application"
-      image     = "public.ecr.aws/x3n7f5y0/arieldomchik:ecs-test"  # Replace with your Node.js Docker image
+      image     = var.container_image_url
       essential = true
       portMappings = [
         {
@@ -110,7 +108,7 @@ resource "aws_ecs_task_definition" "app_task" {
     },
     {
       name      = "mongodb"
-      image     = "bitnami/mongodb"
+      image     = var.db_image_url
       essential = true
       portMappings = [
         {
@@ -219,7 +217,7 @@ resource "aws_security_group" "hello_world_task" {
 
 
 resource "aws_ecs_service" "hello_world_task" {
-  name            = "nodejs-mongodb-service"
+  name            = var.ecs_service_name
   cluster         = aws_ecs_cluster.my_cluster.id
   task_definition = aws_ecs_task_definition.app_task.arn
   launch_type     = "FARGATE"  # Use Fargate launch type for serverless containers
