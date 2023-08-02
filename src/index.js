@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
       if (!fruit) {
         throw new Error('No fruit found');
       }
-      const message = `Hello Octopus! This is a pipeline test! Number of apples: ${fruit.qty}`;
+      const message = `Hello Octopus! Number of apples: ${fruit.qty}`;
       res.send(message);
     })
     .catch(err => {
